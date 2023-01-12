@@ -1,5 +1,5 @@
 ## PostgreSQL for pybossa
-The database setup is based on postgresql-pgadmin by [awesome-compose](https://github.com/docker/awesome-compose/tree/master/postgresql-pgadmin)
+The database setup is based on postgresql-pgadmin by [awesome-compose](https://github.com/docker/awesome-compose/tree/master/postgresql-pgadmin). 
 It includes the following features:
 - creation of (consistent) database with automatic initilisation of pybossa user and database.
 - backup script for daily backups of pybossa database -> cronjob.
