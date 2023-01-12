@@ -20,7 +20,7 @@ Project structure:
 ## Configuration
 
 ### .env
-Before deploying this setup, you need to create and configure the following values in the [.env](.env) file.
+Before deploying this setup, you need to configure the following values in the [.env](.env) file.
 - POSTGRES_USER
 - POSTGRES_PW
 - POSTGRES_DB (can be default value)
@@ -37,7 +37,7 @@ There are two bind mounts defined in [_compose.yaml_](compose.yaml)
  
 ## Deploy with docker compose
 When deploying this setup, the pgAdmin web interface will be available at port 5050 (e.g. http://localhost:5050).  
-On first deployment the init-user-db.sh script will be executed and the **pgdata** dir is created as volume mount point for the postgresql database. 
+On first deployment the [init-user-db.sh](initdb/init-user-db.sh) script will be executed and the **pgdata** dir is created as volume mount point for the postgresql database. 
 This ensures that the contents of the database are not lost on shutting down the container.
 
 ``` shell
@@ -48,7 +48,7 @@ Starting pgadmin ... done
 Please note: in case the database initialization process should be repeated the **pgdata** dir has to be deleted first. The [init-user-db.sh](initdb/init-user-db.sh) script is only executed if there exists no database already in pgdata! 
 
 ## Add postgres database to pgAdmin
-After logging in with your credentials of the .env file, you can add your database to pgAdmin. 
+After logging in with your credentials of the [.env](.env) file, you can add your database to pgAdmin. 
 1. Right-click "Servers" in the top-left corner and select "Create" -> "Server..."
 2. Name your connection
 3. Change to the "Connection" tab and add the connection details:
