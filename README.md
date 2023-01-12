@@ -2,7 +2,7 @@
 The database setup is based on postgresql-pgadmin by [awesome-compose](https://github.com/docker/awesome-compose/tree/master/postgresql-pgadmin).  
 It includes the following features:
 - creation of permanent database with automatic initialization of pybossa user and database. Pybossa specific tables are **_not_** created.
-- backup script for daily backups of pybossa database --> cronjob.
+- backup script for (daily) backups of pybossa database inside docker container, which can be added as cronjob
 - pgAdmin web interface available at port 5050 (e.g. http://localhost:5050).
 
 Project structure:
