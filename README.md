@@ -20,7 +20,7 @@ Project structure:
 ## Configuration
 
 ### .env
-Before deploying this setup, you need to configure the following values in the [.env](.env) file.
+Before deploying this setup, you need to create and configure the following values in the **.env** file.
 - POSTGRES_USER
 - POSTGRES_PW
 - POSTGRES_DB (can be default value)
@@ -29,6 +29,24 @@ Before deploying this setup, you need to configure the following values in the [
 - PYBOSSA_DB
 - PGADMIN_MAIL
 - PGADMIN_PW
+
+This should look something like the following:
+```
+# Configuration for default postgres database
+POSTGRES_USER=postgres
+POSTGRES_PW=<password>
+POSTGRES_DB=postgres
+
+# Configuration for pybossa database
+PYBOSSA_USER=pybossa
+PYBOSSA_PW=<password>
+PYBOSSA_DB=pybossa
+
+# Configuration for pgadmin
+PGADMIN_MAIL=dev@citizenscience.ch
+PGADMIN_PW=<password>
+```
+Please replace each placeholder <password> by a unique password.
 
 ### Bind Mounts
 There are two bind mounts defined in [_compose.yaml_](compose.yaml) 
@@ -48,7 +66,7 @@ Starting pgadmin ... done
 Please note: in case the database initialization process should be repeated the **pgdata** dir has to be deleted first. The [init-user-db.sh](initdb/init-user-db.sh) script is only executed if there exists no database already in pgdata! 
 
 ## Add postgres database to pgAdmin
-After logging in with your credentials of the [.env](.env) file, you can add your database to pgAdmin. 
+After logging in with your credentials of the **.env** file, you can add your database to pgAdmin. 
 1. Right-click "Servers" in the top-left corner and select "Create" -> "Server..."
 2. Name your connection
 3. Change to the "Connection" tab and add the connection details:
