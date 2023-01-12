@@ -1,8 +1,8 @@
 ## PostgreSQL for pybossa
 The database setup is based on postgresql-pgadmin by [awesome-compose](https://github.com/docker/awesome-compose/tree/master/postgresql-pgadmin).  
 It includes the following features:
-- creation of (consistent) database with automatic initialization of pybossa user and database.
-- backup script for daily backups of pybossa database -> cronjob.
+- creation of (consistent) database with automatic initialization of pybossa user and database (but not pybossa tables).
+- backup script for daily backups of pybossa database --> cronjob.
 - pgAdmin web interface available at port 5050 (e.g. http://localhost:5050).
 
 Project structure:
@@ -33,11 +33,11 @@ Before deploying this setup, you need to create and configure the following valu
 ### Bind Mounts
 There are two bind mounts defined in [_compose.yaml_](compose.yaml) 
 1. [initdb](initdb) hold the initialization scripts that are only executed on first container run
-2. [pgdata](pgdata) is the permanent store for the postgresql database on the host system and created on first container run. If the dir exists already and contains a functioning database then that database will be used and the initialization script will be skipped
+2. [pgdata](_blank) is the permanent store for the postgresql database on the host system and created on first container run. If the dir exists already and contains a functioning database then that database will be used and the initialization script will be skipped
  
 ## Deploy with docker compose
 When deploying this setup, the pgAdmin web interface will be available at port 5050 (e.g. http://localhost:5050).  
-On first deployment the init-user-db.sh script will be executed and the [pgdata](pgdata) dir is created as volume mount point for the postgresql database. 
+On first deployment the init-user-db.sh script will be executed and the [pgdata](_blank) dir is created as volume mount point for the postgresql database. 
 This ensures that the contents of the database are not lost on shutting down the container.
 
 ``` shell
@@ -45,7 +45,7 @@ $ docker compose up -d
 Starting postgres ... done
 Starting pgadmin ... done
 ```
-Please note: in case the database initialization process should be repeated the [pgdata](pgdata) dir has to be deleted first. The init-user-db.sh script is only executed if there exists no database already in pgdata! 
+Please note: in case the database initialization process should be repeated the [pgdata](_blank) dir has to be deleted first. The [init-user-db.sh](initdb/init-user-db.sh) script is only executed if there exists no database already in pgdata! 
 
 ## Add postgres database to pgAdmin
 After logging in with your credentials of the .env file, you can add your database to pgAdmin. 
