@@ -22,29 +22,29 @@ Project structure:
 ### .env
 Before deploying this setup, you need to create and configure the following values in the **.env** file.
 - POSTGRES_USER
-- POSTGRES_PW
-- POSTGRES_DB (can be default value)
+- POSTGRES_PASSWORD
+- POSTGRES_DB (optional)
 - PYBOSSA_USER
-- PYBOSSA_PW
+- PYBOSSA_PASSWORD
 - PYBOSSA_DB
-- PGADMIN_MAIL
-- PGADMIN_PW
+- PGADMIN_DEFAULT_EMAIL
+- PGADMIN_DEFAULT_PASSWORD
 
 This should look something like the following:
 ```
 # Configuration for default postgres database
 POSTGRES_USER=postgres
-POSTGRES_PW=<password>
+POSTGRES_PASSWORD=<password>
 POSTGRES_DB=postgres
 
 # Configuration for pybossa database
 PYBOSSA_USER=pybossa
-PYBOSSA_PW=<password>
+PYBOSSA_PASSWORD=<password>
 PYBOSSA_DB=pybossa
 
 # Configuration for pgadmin
-PGADMIN_MAIL=dev@citizenscience.ch
-PGADMIN_PW=<password>
+PGADMIN_DEFAULT_EMAIL=dev@citizenscience.ch
+PGADMIN_DEFAULT_PASSWORD=<password>
 ```
 Please replace each placeholder <password> by a unique password.
 
