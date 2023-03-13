@@ -8,9 +8,15 @@ It includes the following features:
 Project structure:
 ```
 .
-├── .env
 ├── backup-db.sh
 ├── compose.yaml
+├── config
+│   ├── .env
+│   ├── secrets
+│   │   ├── pgadmin_pw.txt
+│   │   ├── postgres_pw.txt
+│   │   └── pybossa_pw.txt
+│   └── servers.json
 ├── initdb
 │   └── init-user-db.sh
 ├── [pgdata] ...
@@ -20,31 +26,14 @@ Project structure:
 ## Configuration
 
 ### .env
-Before deploying this setup, you need to create and configure the following values in the **.env** file.
-- POSTGRES_USER
-- POSTGRES_PASSWORD
-- POSTGRES_DB (optional)
-- PYBOSSA_USER
-- PYBOSSA_PASSWORD
-- PYBOSSA_DB
-- PGADMIN_DEFAULT_EMAIL
-- PGADMIN_DEFAULT_PASSWORD
+Before deploying this setup, you need to create and configure the following text files in the [_secrets_](config/secrets) folder.
+- pgadmin_pw.txt: password for pgadmin user (username / email is defined in [_.env_](config/.env))
+- postgres_pw.txt: password for default postgres user
+- pybossa_pw.txt: relevant for initialization script – password for created user pybossa
 
-This should look something like the following:
+This should be just the plain text password and look something like the following:
 ```
-# Configuration for default postgres database
-POSTGRES_USER=postgres
-POSTGRES_PASSWORD=<password>
-POSTGRES_DB=postgres
-
-# Configuration for pybossa database
-PYBOSSA_USER=pybossa
-PYBOSSA_PASSWORD=<password>
-PYBOSSA_DB=pybossa
-
-# Configuration for pgadmin
-PGADMIN_DEFAULT_EMAIL=dev@citizenscience.ch
-PGADMIN_DEFAULT_PASSWORD=<password>
+<password>
 ```
 Please replace each placeholder <password> by a unique password.
 
@@ -66,15 +55,7 @@ Starting pgadmin ... done
 Please note: in case the database initialization process should be repeated the **pgdata** dir has to be deleted first. The [init-user-db.sh](initdb/init-user-db.sh) script is only executed if there exists no database already in pgdata! 
 
 ## Add postgres database to pgAdmin
-After logging in with your credentials of the **.env** file, you can add your database to pgAdmin. 
-1. Right-click "Servers" in the top-left corner and select "Create" -> "Server..."
-2. Name your connection
-3. Change to the "Connection" tab and add the connection details:
-- Hostname: "postgres" (this would normally be your IP address of the postgres database - however, docker can resolve this container ip by its name)
-- Port: "5432"
-- Maintenance Database: $POSTGRES_DB (see .env)
-- Username: $POSTGRES_USER (see .env)
-- Password: $POSTGRES_PW (see .env)
+After logging in with your credentials of the **pgadmin_pw.txt** file, you can open your database in pgAdmin, since it has been preconfigured by the [servers.json](config/servers.json). You just need to enter the password from **pybossa_pw.txt** when prompted
   
 ## Expected result
 

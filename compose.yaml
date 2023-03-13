@@ -7,9 +7,13 @@ services:
       - ./pgdata:/var/lib/postgresql/data
     ports:
       - "5432:5432"
-    env_file:
-      .env
+    environment:
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_pw
+      PYBOSSA_PASSWORD_FILE: /run/secrets/pybossa_pw
     restart: always
+    secrets:
+      - postgres_pw
+      - pybossa_pw
     networks:
       - backend
     
@@ -17,14 +21,28 @@ services:
   pgadmin:
     container_name: pgadmin
     image: dpage/pgadmin4:latest
+    volumes:
+      - ./config/servers.json:/pgadmin4/servers.json
+    environment:
+      PGADMIN_DEFAULT_PASSWORD_FILE: /run/secrets/pgadmin_pw
     ports:
       - "5050:80"
     restart: always
-    env_file:
-      .env
+    secrets:
+      - pgadmin_pw
     networks:
       - backend
+    env_file:
+      - ./config/.env
 
+secrets:
+  postgres_pw:
+    file: ./config/secrets/postgres_pw.txt
+  pybossa_pw:
+    file: ./config/secrets/pybossa_pw.txt
+  pgadmin_pw:
+    file: ./config/secrets/pgadmin_pw.txt
+   
 networks:
   backend:
     name: pybossa-postgres-net

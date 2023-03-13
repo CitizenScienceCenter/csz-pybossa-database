@@ -16,7 +16,7 @@ mkdir -p ${BACKUP_DIR}
 OUTPUT_PATH=${BACKUP_DIR}/${FILENAME}`date +"%Y%m%d"`${SUFFIX}
 
 # create dump of database inside docker container with env variables of container
-docker exec postgres /bin/bash -c 'pg_dump -U ${PYBOSSA_USER} ${PYBOSSA_DB}' > ${OUTPUT_PATH}
+docker exec postgres /bin/bash -c 'pg_dump -U pybossa pybossa' > ${OUTPUT_PATH}
 
 # show the user the result
 echo "${OUTPUT_PATH} was created:"
