@@ -26,7 +26,9 @@ Project structure:
 ## Configuration
 
 ### .env
-Before deploying this setup, you need to create and configure the following text files in the [_secrets_](config/secrets) folder.
+Before deploying this setup, you need to create docker secrets for POSTGRES_PW, PYBOSSA_PW and PGADMIN_PW. This can either be done by 
+1. creating the secrets manually via docker on the host and linking them as external secrets in [_compose.yaml_](compose.yaml) (recommended for production)
+2. create and configure the following text files in the [_secrets_](config/secrets) folder and docker compose creates the secrets (default & sufficient dev / test)
 - pgadmin_pw.txt: password for pgadmin user (username / email is defined in [_.env_](config/.env))
 - postgres_pw.txt: password for default postgres user
 - pybossa_pw.txt: relevant for initialization script – password for created user pybossa
@@ -37,8 +39,8 @@ This should be just the plain text password and look something like the followin
 ```
 Please replace each placeholder <password> by a unique password.
 
-### Bind Mounts
-There are two bind mounts defined in [_compose.yaml_](compose.yaml) 
+### Volume Mounts
+There are two volume mounts defined in [_compose.yaml_](compose.yaml) 
 1. [initdb](initdb) hold the initialization scripts that are only executed on first container run
 2. **pgdata** is the permanent store for the postgresql database on the host system and created on first container run. If the dir exists already and contains a functioning database then that database will be used and the initialization script will be skipped
  
