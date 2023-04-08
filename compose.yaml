@@ -16,8 +16,25 @@ services:
       - pybossa_pw
     networks:
       - backend
-    
 
+  # secondary:
+  #   container_name: postgres-replica
+  #   image: postgres:latest
+  #   volumes:
+  #     - ./initdb:/docker-entrypoint-initdb.d
+  #     - ./pgdata:/var/lib/postgresql/data
+  #   ports:
+  #     - "5432:5432"
+  #   environment:
+  #     POSTGRES_PASSWORD_FILE: /run/secrets/postgres_pw
+  #     PYBOSSA_PASSWORD_FILE: /run/secrets/pybossa_pw
+  #   restart: always
+  #   secrets:
+  #     - postgres_pw
+  #     - pybossa_pw
+  #   networks:
+  #     - backend
+    
   pgadmin:
     container_name: pgadmin
     image: dpage/pgadmin4:latest
