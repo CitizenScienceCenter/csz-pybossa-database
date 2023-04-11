@@ -18,6 +18,31 @@ services:
     networks:
       - backend
 
+  # nfs-server:
+  #   container_name: nfs-server
+  #   volumes:
+  #     #- ./uploads:/some/container/path
+  #     - ./uploads:/nfs/uploads
+  #     - ./config/nfs/exports.txt:/etc/exports:ro
+  #     - /lib/modules:/lib/modules:ro
+  #   ports:
+  #     - 2049:2049/tcp
+  #     - 2049:2049/udp
+  #     - 111:111/udp
+  #     - 32765:32765/udp
+  #     - 32767:32767/udp
+
+  #   image: erichough/nfs-server
+  #   cap_add:
+  #     - SYS_ADMIN
+  #     - SYS_MODULE
+  #   environment:
+  #     NFS_DISABLE_VERSION_3: True
+  #     POSTGRES_HOST: 'db-master-testing.c3s.internal'
+  #   privileged: true
+  #   networks:
+  #     - backend
+
   # secondary:
   #   container_name: postgres-replica
   #   image: postgres:latest
@@ -40,7 +65,7 @@ services:
     container_name: pgadmin
     image: dpage/pgadmin4:latest
     volumes:
-      - ./config/servers.json:/pgadmin4/servers.json
+      - ./config/pgadmin/servers.json:/pgadmin4/servers.json
     environment:
       PGADMIN_DEFAULT_PASSWORD_FILE: /run/secrets/pgadmin_pw
     ports:
@@ -51,7 +76,7 @@ services:
     networks:
       - backend
     env_file:
-      - ./config/.env
+      - ./config/pgadmin/.env
 
 secrets:
   postgres_pw:
