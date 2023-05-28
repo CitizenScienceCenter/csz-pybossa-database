@@ -16,7 +16,7 @@ services:
       - postgres_pw
       - pybossa_pw
     networks:
-      - backend
+      - postgres-net
 
   # secondary:
   #   container_name: postgres-replica
@@ -34,7 +34,7 @@ services:
   #     - postgres_pw
   #     - pybossa_pw
   #   networks:
-  #     - backend
+  #     - postgres-net
     
   pgadmin:
     container_name: pgadmin
@@ -49,7 +49,7 @@ services:
     secrets:
       - pgadmin_pw
     networks:
-      - backend
+      - postgres-net
     env_file:
       - ./config/.env
 
@@ -62,5 +62,5 @@ secrets:
     file: ./config/secrets/pgadmin_pw.txt
    
 networks:
-  backend:
+  postgres-net:
     name: pybossa-postgres-net
