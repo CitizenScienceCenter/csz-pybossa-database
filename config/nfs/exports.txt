@@ -1,1 +1,0 @@
-/nfs/uploads    db-master-testing.c3s.internal(rw,sync,no_root_squash,no_subtree_check) 
