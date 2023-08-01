@@ -16,7 +16,7 @@ services:
       - postgres_pw
       - pybossa_pw
     networks:
-      - backend
+      - postgres-net
 
   # nfs-server:
   #   container_name: nfs-server
@@ -59,7 +59,7 @@ services:
   #     - postgres_pw
   #     - pybossa_pw
   #   networks:
-  #     - backend
+  #     - postgres-net
     
   pgadmin:
     container_name: pgadmin
@@ -74,7 +74,7 @@ services:
     secrets:
       - pgadmin_pw
     networks:
-      - backend
+      - postgres-net
     env_file:
       - ./config/pgadmin/.env
 
@@ -87,5 +87,5 @@ secrets:
     file: ./config/secrets/pgadmin_pw.txt
    
 networks:
-  backend:
+  postgres-net:
     name: pybossa-postgres-net
