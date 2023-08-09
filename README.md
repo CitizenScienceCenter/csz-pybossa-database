@@ -48,7 +48,7 @@ Please replace each placeholder <password> by a unique password.
 There are two volume mounts defined in [_compose.yaml_](compose.yaml) 
 1. [initdb](initdb) hold the initialization scripts that are only executed on first container run
 2. **pgdata** is the permanent store for the postgresql database on the host system and created on first container run. If the dir exists already and contains a functioning database then that database will be used and the initialization script will be skipped
-3. **pgbackup** is the directory for all backups created by [_compose.yaml_](backup-db.sh). This could considered to be a mount point for an external disk on the host system to keep backups on a seperate physical drive and avoid filling the instance storage, in case [_compose.yaml_](backup-db.sh) is configured to run as cronjob.
+3. **pgbackup** is the directory for all backups created by [_backup-db.sh_](backup-db.sh). This could considered to be a mount point for an external disk on the host system to keep backups on a seperate physical drive and avoid filling the instance storage, in case [_backup-db.sh_](backup-db.sh) is configured to run as cronjob.
  
 ## Deploy with docker compose
 When deploying this setup, the pgAdmin web interface will be available at port 80 (e.g. http://localhost:80).  
