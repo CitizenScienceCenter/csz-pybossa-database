@@ -3,7 +3,7 @@ The database setup is based on postgresql-pgadmin by [awesome-compose](https://g
 It includes the following features:
 - creation of permanent database with automatic initialization of pybossa user and database. Pybossa specific tables are **_not_** created.
 - backup script for (daily) backups of pybossa database inside docker container, which can be added as cronjob
-- pgAdmin web interface available at port 5050 (e.g. http://localhost:5050).
+- pgAdmin web interface available at port 80 (e.g. http://localhost:80).
 
 Project structure:
 ```
@@ -11,15 +11,20 @@ Project structure:
 ├── backup-db.sh
 ├── compose.yaml
 ├── config
-│   ├── .env
+│   ├── pgadmin
+│   │   ├── .env
+│   │   └── servers.json
+│   ├── postgresql
+│   │   ├── pg_hba.conf
+│   │   └── postgresql.conf
 │   ├── secrets
 │   │   ├── pgadmin_pw.txt
 │   │   ├── postgres_pw.txt
 │   │   └── pybossa_pw.txt
-│   └── servers.json
 ├── initdb
 │   └── init-user-db.sh
 ├── [pgdata] ...
+├── [pgbackup] ...
 └── README.md
 ```
 
@@ -43,11 +48,12 @@ Please replace each placeholder <password> by a unique password.
 There are two volume mounts defined in [_compose.yaml_](compose.yaml) 
 1. [initdb](initdb) hold the initialization scripts that are only executed on first container run
 2. **pgdata** is the permanent store for the postgresql database on the host system and created on first container run. If the dir exists already and contains a functioning database then that database will be used and the initialization script will be skipped
+3. **pgbackup** is the directory for all backups created by [_compose.yaml_](backup-db.sh). This could considered to be a mount point for an external disk on the host system to keep backups on a seperate physical drive and avoid filling the instance storage, in case [_compose.yaml_](backup-db.sh) is configured to run as cronjob.
  
 ## Deploy with docker compose
-When deploying this setup, the pgAdmin web interface will be available at port 5050 (e.g. http://localhost:5050).  
-On first deployment the [init-user-db.sh](initdb/init-user-db.sh) script will be executed and the **pgdata** dir is created as volume mount point for the postgresql database. 
-This ensures that the contents of the database are not lost on shutting down the container.
+When deploying this setup, the pgAdmin web interface will be available at port 80 (e.g. http://localhost:80).  
+On first deployment the [init-user-db.sh](initdb/init-user-db.sh) script will be executed and both the **pgdata** and **pgbackup** dirs are created as volume mount point for the postgresql database. 
+This ensures that the contents of the database are not lost on shutting down the container and that backups are accessible from the host system.
 
 ``` shell
 $ docker compose up -d
