@@ -50,6 +50,9 @@ There are three volume mounts defined in [_compose.yaml_](compose.yaml)
 2. **pgdata** is the permanent store for the postgresql database on the host system and created on first container run. If the dir exists already and contains a functioning database then that database will be used and the initialization script will be skipped
 3. **pgbackup** is the directory for all backups created by [_backup-db.sh_](backup-db.sh). This could considered to be a mount point for an external disk on the host system to keep backups on a seperate physical drive and avoid filling the instance storage, in case [_backup-db.sh_](backup-db.sh) is configured to run as cronjob.
  
+### Parameter Adaption
+Analysed with [PGTune](https://pgtune.leopard.in.ua/) and adapted in [postgresql.conf](config/postgresql/postgresql.conf) for 4GB | 4CPU | HDD setup.
+
 ## Deploy with docker compose
 When deploying this setup, the pgAdmin web interface will be available at port 80 (e.g. http://localhost:80).  
 On first deployment the [init-user-db.sh](initdb/init-user-db.sh) script will be executed and both the **pgdata** and **pgbackup** dirs are created as volume mount point for the postgresql database. 
