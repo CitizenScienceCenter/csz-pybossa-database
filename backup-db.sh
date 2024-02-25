@@ -15,7 +15,7 @@ SUFFIX=.sql
 OUTPUT_PATH=${BACKUP_DIR}/${FILENAME}`date +"%Y%m%d"`${SUFFIX}
 
 # create dump of database inside docker container with env variables of container
-docker exec -i postgres pg_dump --clean --dbname=pybossa --username=postgres --file=${OUTPUT_PATH}
+docker exec -i postgres pg_dumpall --clean --username=postgres --file=${OUTPUT_PATH}
 
 # show result
 echo "${OUTPUT_PATH} was created"
