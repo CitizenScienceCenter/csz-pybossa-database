@@ -1,7 +1,7 @@
 services:
   postgres:
     container_name: postgres
-    image: postgres:latest
+    image: postgres:16
     volumes:
       - ./initdb:/docker-entrypoint-initdb.d
       - ./pgdata:/var/lib/postgresql/data
@@ -17,8 +17,13 @@ services:
     secrets:
       - postgres_pw
       - pybossa_pw
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "pybossa", "-d", "pybossa"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     networks:
-      - postgres-net
+      - postgres
     
   pgadmin:
     container_name: pgadmin
@@ -28,13 +33,11 @@ services:
     environment:
       PGADMIN_DEFAULT_PASSWORD_FILE: /run/secrets/pgadmin_pw
       PGADMIN_LISTEN_PORT: 8080
-    ports:
-      - "8080:8080"
     restart: always
     secrets:
       - pgadmin_pw
     networks:
-      - postgres-net
+      - postgres
     env_file:
       - ./config/pgadmin/.env
 
@@ -47,5 +50,5 @@ secrets:
     file: ./config/secrets/pgadmin_pw.txt
    
 networks:
-  postgres-net:
-    name: pybossa-postgres-net
+  postgres:
+    name: pybossa-postgres-network
